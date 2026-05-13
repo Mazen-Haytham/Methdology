@@ -30,15 +30,12 @@ jobs:
       - name: Build Docker images
         run: docker compose build
 
-      - name: Extract dist folder from Frontend image
-        run: |
-          IMAGE_NAME=$(docker compose images -q frontend)
-          docker create --name frontend_extract $IMAGE_NAME
-          docker cp frontend_extract:/usr/share/nginx/html/dist ./Frontend/dist
-          docker rm frontend_extract
-
       - name: Start containers
         run: docker compose up -d
+
+      - name: Extract dist folder from Frontend container
+        run: |
+          docker cp petadopt_frontend:/usr/share/nginx/html ./Frontend/dist
 
       - name: Verify containers are running
         run: |
