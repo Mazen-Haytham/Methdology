@@ -7,7 +7,7 @@ using PetAdopt.DAL.Models;
 
 namespace PetAdopt.API.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin")]  //Password Hashing is added
 public class AdminController : BaseController
 {
     private readonly UserManager<ApplicationUser> _userManager;
