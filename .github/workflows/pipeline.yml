@@ -30,6 +30,12 @@ jobs:
       - name: Build Docker images
         run: docker compose build
 
+      - name: Extract dist folder from Frontend image
+        run: |
+          docker create --name frontend_extract petadopt_frontend
+          docker cp frontend_extract:/usr/share/nginx/html/dist ./Frontend/dist
+          docker rm frontend_extract
+
       - name: Start containers
         run: docker compose up -d
 
@@ -41,9 +47,9 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
-          publish-dir: './Frontend/dist'
+          publish-dir: "./Frontend/dist"
           production-deploy: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}    
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
