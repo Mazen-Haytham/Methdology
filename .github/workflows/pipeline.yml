@@ -1,0 +1,39 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo "ASPNETCORE_ENVIRONMENT=${{ secrets.ASPNETCORE_ENVIRONMENT }}" >> .env
+          echo "ASPNETCORE_URLS=${{ secrets.ASPNETCORE_URLS }}" >> .env
+          echo "ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }}" >> .env
+          echo "JWT__Key=${{ secrets.JWT__KEY }}" >> .env
+          echo "JWT__Issuer=${{ secrets.JWT__ISSUER }}" >> .env
+          echo "JWT__Audience=${{ secrets.JWT__AUDIENCE }}" >> .env
+          echo "AdminSettings__Email=${{ secrets.ADMINSETTINGS__EMAIL }}" >> .env
+          echo "AdminSettings__Password=${{ secrets.ADMINSETTINGS__PASSWORD }}" >> .env
+
+      - name: Build Docker images
+        run: docker compose build
+
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Verify containers are running
+        run: |
+          docker compose ps
+          docker compose logs --tail=20
