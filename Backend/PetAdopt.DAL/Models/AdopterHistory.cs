@@ -8,7 +8,7 @@ namespace PetAdopt.DAL.Models
         public string PreviousPetType { get; set; }
         public string VeterinaryReference { get; set; }
         public string Experience { get; set; }
-       // public int? YearOfAdoption { get; set; }
+        public int? YearOfAdoption { get; set; }
 
         public ApplicationUser Adopter { get; set; }
     }
