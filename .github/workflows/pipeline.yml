@@ -32,7 +32,8 @@ jobs:
 
       - name: Extract dist folder from Frontend image
         run: |
-          docker create --name frontend_extract petadopt_frontend
+          IMAGE_NAME=$(docker compose images -q frontend)
+          docker create --name frontend_extract $IMAGE_NAME
           docker cp frontend_extract:/usr/share/nginx/html/dist ./Frontend/dist
           docker rm frontend_extract
 
