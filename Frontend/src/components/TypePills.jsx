@@ -26,7 +26,6 @@ const TYPES = [
   { label: "Cats",    value: "cat",    emoji: "🐱" },
   { label: "Birds",   value: "bird",   emoji: "🐦" },
   { label: "Rabbits", value: "rabbit", emoji: "🐰" },
-  { label: "Other",   value: "other",  emoji: "✨" },
 ];
 
 function TypePills({ onSelect, active }) {
