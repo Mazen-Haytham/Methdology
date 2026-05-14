@@ -10,6 +10,7 @@
   so every component can access the logged-in user.
 */
 /*Test Merge*/ 
+/*TEST CI/CD */ 
 import AppRouter from "./router";
 import ErrorBoundary from "./components/ui/ErrorBoundary";
 
